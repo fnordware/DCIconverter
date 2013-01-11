@@ -1,0 +1,342 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2AA0277516A09DD30061BE42 /* DCIconverter_AE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AA0277216A09DD30061BE42 /* DCIconverter_AE.cpp */; };
+		2AA0277616A09DD30061BE42 /* DCIconverter_AE_PiPL.r in Rez */ = {isa = PBXBuildFile; fileRef = 2AA0277416A09DD30061BE42 /* DCIconverter_AE_PiPL.r */; };
+		2AA0277916A09DE00061BE42 /* DCIconverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AA0277716A09DE00061BE42 /* DCIconverter.cpp */; };
+		2AA0278916A09DF90061BE42 /* libIlmBase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AA0278416A09DF50061BE42 /* libIlmBase.a */; };
+		2AA0281816A0BD2A0061BE42 /* AEGP_SuiteHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AA0281516A0BD2A0061BE42 /* AEGP_SuiteHandler.cpp */; };
+		2AA0281916A0BD2A0061BE42 /* MissingSuiteError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2AA0281716A0BD2A0061BE42 /* MissingSuiteError.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2AA0278316A09DF50061BE42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2AA0277A16A09DF50061BE42 /* IlmBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2A6D4C4D15CDEB0A006BADE7;
+			remoteInfo = IlmBase;
+		};
+		2AA0278516A09DF50061BE42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2AA0277A16A09DF50061BE42 /* IlmBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2A6D4CFF15CDEBEF006BADE7;
+			remoteInfo = eLut;
+		};
+		2AA0278716A09DF50061BE42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2AA0277A16A09DF50061BE42 /* IlmBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2A6D4D3715CDF275006BADE7;
+			remoteInfo = toFloat;
+		};
+		2AA0278A16A09E020061BE42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2AA0277A16A09DF50061BE42 /* IlmBase.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A6D4C4C15CDEB0A006BADE7;
+			remoteInfo = IlmBase;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2AA0277216A09DD30061BE42 /* DCIconverter_AE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DCIconverter_AE.cpp; path = ../DCIconverter_AE.cpp; sourceTree = SOURCE_ROOT; };
+		2AA0277316A09DD30061BE42 /* DCIconverter_AE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCIconverter_AE.h; path = ../DCIconverter_AE.h; sourceTree = SOURCE_ROOT; };
+		2AA0277416A09DD30061BE42 /* DCIconverter_AE_PiPL.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = DCIconverter_AE_PiPL.r; path = ../DCIconverter_AE_PiPL.r; sourceTree = SOURCE_ROOT; };
+		2AA0277716A09DE00061BE42 /* DCIconverter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DCIconverter.cpp; path = ../../DCIconverter.cpp; sourceTree = SOURCE_ROOT; };
+		2AA0277816A09DE00061BE42 /* DCIconverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DCIconverter.h; path = ../../DCIconverter.h; sourceTree = SOURCE_ROOT; };
+		2AA0277A16A09DF50061BE42 /* IlmBase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = IlmBase.xcodeproj; sourceTree = "<group>"; };
+		2AA0281516A0BD2A0061BE42 /* AEGP_SuiteHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AEGP_SuiteHandler.cpp; path = "../../../ext/Adobe After Effects CS5 SDK/Examples/Util/AEGP_SuiteHandler.cpp"; sourceTree = SOURCE_ROOT; };
+		2AA0281616A0BD2A0061BE42 /* AEGP_SuiteHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AEGP_SuiteHandler.h; path = "../../../ext/Adobe After Effects CS5 SDK/Examples/Util/AEGP_SuiteHandler.h"; sourceTree = SOURCE_ROOT; };
+		2AA0281716A0BD2A0061BE42 /* MissingSuiteError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MissingSuiteError.cpp; path = "../../../ext/Adobe After Effects CS5 SDK/Examples/Util/MissingSuiteError.cpp"; sourceTree = SOURCE_ROOT; };
+		C4E618CC095A3CE80012CA3F /* DCI Converter.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DCI Converter.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C4E618CA095A3CE80012CA3F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AA0278916A09DF90061BE42 /* libIlmBase.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2AA0277B16A09DF50061BE42 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2AA0278416A09DF50061BE42 /* libIlmBase.a */,
+				2AA0278616A09DF50061BE42 /* eLut */,
+				2AA0278816A09DF50061BE42 /* toFloat */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C4E6187C095A3C800012CA3F = {
+			isa = PBXGroup;
+			children = (
+				2AA0277316A09DD30061BE42 /* DCIconverter_AE.h */,
+				2AA0277216A09DD30061BE42 /* DCIconverter_AE.cpp */,
+				2AA0277816A09DE00061BE42 /* DCIconverter.h */,
+				2AA0277716A09DE00061BE42 /* DCIconverter.cpp */,
+				2AA0277416A09DD30061BE42 /* DCIconverter_AE_PiPL.r */,
+				2AA0281616A0BD2A0061BE42 /* AEGP_SuiteHandler.h */,
+				2AA0281516A0BD2A0061BE42 /* AEGP_SuiteHandler.cpp */,
+				2AA0281716A0BD2A0061BE42 /* MissingSuiteError.cpp */,
+				2AA0277A16A09DF50061BE42 /* IlmBase.xcodeproj */,
+				C4E6188C095A3C800012CA3F /* Products */,
+			);
+			comments = "SDK Backwards is some pretty rudimentary audio processing, but the flags and params are handled in an appropriate manner.";
+			sourceTree = "<group>";
+		};
+		C4E6188C095A3C800012CA3F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C4E618CC095A3CE80012CA3F /* DCI Converter.plugin */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C4E618CB095A3CE80012CA3F /* DCI Converter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4E618CE095A3CE90012CA3F /* Build configuration list for PBXNativeTarget "DCI Converter" */;
+			buildPhases = (
+				C4E618C8095A3CE80012CA3F /* Resources */,
+				C4E618C9095A3CE80012CA3F /* Sources */,
+				C4E618CA095A3CE80012CA3F /* Frameworks */,
+				C4E618EA095A3E040012CA3F /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2AA0278B16A09E020061BE42 /* PBXTargetDependency */,
+			);
+			name = "DCI Converter";
+			productName = SDK_Backwards.plugin;
+			productReference = C4E618CC095A3CE80012CA3F /* DCI Converter.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C4E6187E095A3C800012CA3F /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C4E6187F095A3C800012CA3F /* Build configuration list for PBXProject "DCIconverter_AE" */;
+			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = C4E6187C095A3C800012CA3F;
+			productRefGroup = C4E6188C095A3C800012CA3F /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2AA0277B16A09DF50061BE42 /* Products */;
+					ProjectRef = 2AA0277A16A09DF50061BE42 /* IlmBase.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C4E618CB095A3CE80012CA3F /* DCI Converter */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		2AA0278416A09DF50061BE42 /* libIlmBase.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libIlmBase.a;
+			remoteRef = 2AA0278316A09DF50061BE42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2AA0278616A09DF50061BE42 /* eLut */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = eLut;
+			remoteRef = 2AA0278516A09DF50061BE42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2AA0278816A09DF50061BE42 /* toFloat */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = toFloat;
+			remoteRef = 2AA0278716A09DF50061BE42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C4E618C8095A3CE80012CA3F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		C4E618EA095A3E040012CA3F /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AA0277616A09DD30061BE42 /* DCIconverter_AE_PiPL.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C4E618C9095A3CE80012CA3F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AA0277516A09DD30061BE42 /* DCIconverter_AE.cpp in Sources */,
+				2AA0277916A09DE00061BE42 /* DCIconverter.cpp in Sources */,
+				2AA0281816A0BD2A0061BE42 /* AEGP_SuiteHandler.cpp in Sources */,
+				2AA0281916A0BD2A0061BE42 /* MissingSuiteError.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2AA0278B16A09E020061BE42 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IlmBase;
+			targetProxy = 2AA0278A16A09E020061BE42 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2A1BAC2310C3C82A00244D12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				AE_SDK = "\"../../../ext/Adobe After Effects CS5 SDK\"";
+				"AE_SDK[arch=i386]" = "\"../../../ext/Adobe After Effects CS3 SDK\"";
+				"AE_SDK[arch=ppc]" = "\"../../../ext/Adobe After Effects CS3 SDK\"";
+				ARCHS = x86_64;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(AE_SDK)/Examples/Headers",
+					"$(AE_SDK)/Examples/Util",
+					"$(AE_SDK)/Examples/Headers/SP",
+					"$(AE_SDK)/Examples/Resources",
+					"../../../ext/ilmbase-1.0.3/Iex",
+					"../../../ext/ilmbase-1.0.3/Imath",
+				);
+				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
+				REZ_SEARCH_PATHS = "$(SDK_PATH)/Developer/Headers/FlatCarbon";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Release;
+		};
+		2A1BAC2410C3C82A00244D12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SDKROOT)/System/Library/Frameworks/Carbon.framework/Headers/Carbon.h";
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = "DCIconverter_AE.plugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				PREBINDING = NO;
+				PRODUCT_NAME = "DCI Converter";
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C4E61880095A3C800012CA3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				AE_SDK = "\"../../../ext/Adobe After Effects CS5 SDK\"";
+				"AE_SDK[arch=i386]" = "\"../../../ext/Adobe After Effects CS3 SDK\"";
+				"AE_SDK[arch=ppc]" = "\"../../../ext/Adobe After Effects CS3 SDK\"";
+				ARCHS = x86_64;
+				COPY_PHASE_STRIP = NO;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(AE_SDK)/Examples/Headers",
+					"$(AE_SDK)/Examples/Util",
+					"$(AE_SDK)/Examples/Headers/SP",
+					"$(AE_SDK)/Examples/Resources",
+					"../../../ext/ilmbase-1.0.3/Iex",
+					"../../../ext/ilmbase-1.0.3/Imath",
+				);
+				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
+				REZ_SEARCH_PATHS = "$(SDK_PATH)/Developer/Headers/FlatCarbon";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				STRIP_INSTALLED_PRODUCT = NO;
+			};
+			name = Debug;
+		};
+		C4E618CF095A3CE90012CA3F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SDKROOT)/System/Library/Frameworks/Carbon.framework/Headers/Carbon.h";
+				GENERATE_PKGINFO_FILE = YES;
+				INFOPLIST_FILE = "DCIconverter_AE.plugin-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				PREBINDING = NO;
+				PRODUCT_NAME = "DCI Converter";
+				WRAPPER_EXTENSION = plugin;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C4E6187F095A3C800012CA3F /* Build configuration list for PBXProject "DCIconverter_AE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4E61880095A3C800012CA3F /* Debug */,
+				2A1BAC2310C3C82A00244D12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Debug;
+		};
+		C4E618CE095A3CE90012CA3F /* Build configuration list for PBXNativeTarget "DCI Converter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4E618CF095A3CE90012CA3F /* Debug */,
+				2A1BAC2410C3C82A00244D12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C4E6187E095A3C800012CA3F /* Project object */;
+}
