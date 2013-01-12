@@ -221,6 +221,13 @@ ForwardDCIconverter::ForwardDCIconverter(ResponseCurve curve, float gamma,
 }
 
 
+static inline float
+GammaFunc(float in, float gamma)
+{
+	return (in <= 0.f ? 0.f : powf(in, gamma));
+}
+
+
 Pixel
 ForwardDCIconverter::convert(const Pixel &pix) const
 {
@@ -246,9 +253,9 @@ ForwardDCIconverter::convert(const Pixel &pix) const
 	}
 	else if(_curve == Gamma)
 	{
-		r = powf(r, _gamma);
-		g = powf(g, _gamma);
-		b = powf(b, _gamma);
+		r = GammaFunc(r, _gamma);
+		g = GammaFunc(g, _gamma);
+		b = GammaFunc(b, _gamma);
 	}
 
 	
@@ -257,9 +264,9 @@ ForwardDCIconverter::convert(const Pixel &pix) const
 	
 	
 	// XYZ to X'Y'Z'
-	xyz.x = powf(xyz.x, 1.f / _xyz_gamma);
-	xyz.y = powf(xyz.y, 1.f / _xyz_gamma);
-	xyz.z = powf(xyz.z, 1.f / _xyz_gamma);
+	xyz.x = GammaFunc(xyz.x, 1.f / _xyz_gamma);
+	xyz.y = GammaFunc(xyz.y, 1.f / _xyz_gamma);
+	xyz.z = GammaFunc(xyz.z, 1.f / _xyz_gamma);
 	
 	
 	return xyz;
@@ -308,9 +315,9 @@ ReverseDCIconverter::convert(const Pixel &pix) const
 
 
 	// X'Y'Z' to XYZ
-	xyz.x = powf(xyz.x, _xyz_gamma);
-	xyz.y = powf(xyz.y, _xyz_gamma);
-	xyz.z = powf(xyz.z, _xyz_gamma);
+	xyz.x = GammaFunc(xyz.x, _xyz_gamma);
+	xyz.y = GammaFunc(xyz.y, _xyz_gamma);
+	xyz.z = GammaFunc(xyz.z, _xyz_gamma);
 	
 	
 	// Convert XYZ to RGB
@@ -337,9 +344,9 @@ ReverseDCIconverter::convert(const Pixel &pix) const
 	}
 	else if(_curve == Gamma)
 	{
-		r = powf(r, 1.f / _gamma);
-		g = powf(g, 1.f / _gamma);
-		b = powf(b, 1.f / _gamma);
+		r = GammaFunc(r, 1.f / _gamma);
+		g = GammaFunc(g, 1.f / _gamma);
+		b = GammaFunc(b, 1.f / _gamma);
 	}
 	
 	
