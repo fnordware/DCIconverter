@@ -524,26 +524,26 @@ static PF_Err DoRender(
 				}
 				else if(format == PrPixelFormat_BGRA_4444_16u)
 				{
-					err = suites.Iterate16Suite1()->iterate_origin(in_data,
+					err = suites.Iterate8Suite1()->iterate_origin(in_data,
 																	0,
 																	output->height,
 																	input,
 																	&areaR,
 																	&origin,
 																	&p_data,
-																	ProcessRow<PF_Pixel16, PremierePixel<A_u_short>, A_u_short>,
+																	ProcessRow<PF_Pixel, PremierePixel<A_u_short>, A_u_short>,
 																	output);
 				}
 				else if(format == PrPixelFormat_BGRA_4444_32f)
 				{
-					err = suites.IterateFloatSuite1()->iterate_origin(in_data,
+					err = suites.Iterate8Suite1()->iterate_origin(in_data,
 																	0,
 																	output->height,
 																	input,
 																	&areaR,
 																	&origin,
 																	&p_data,
-																	ProcessRow<PF_Pixel32, PremierePixel<PF_FpShort>, PF_FpShort>,
+																	ProcessRow<PF_Pixel, PremierePixel<PF_FpShort>, PF_FpShort>,
 																	output);
 				}
 				
