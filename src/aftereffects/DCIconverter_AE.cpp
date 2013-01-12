@@ -152,6 +152,13 @@ ParamsSetup(
 					DCI_GAMMA_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_POPUP(	"RGB Color Space",
+					RGB_COLOR_SPACE_NUM_OPTIONS,
+					RGB_COLOR_SPACE_sRGB,
+					RGB_COLOR_SPACE_MENU_STR,
+					DCI_RGB_COLOR_SPACE_ID);
+					
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_POPUP(	"Chromatic Adaptation",
 					ADAPTATION_NUM_OPTIONS,
 					ADAPTATION_TEMPERATURE,
@@ -386,6 +393,7 @@ static PF_Err DoRender(
 	PF_ParamDef		*DCI_operation,
 	PF_ParamDef		*DCI_curve,
 	PF_ParamDef		*DCI_gamma,
+	PF_ParamDef		*DCI_rgb_color_space,
 	PF_ParamDef		*DCI_adaptation,
 	PF_ParamDef		*DCI_temperature,
 	PF_ParamDef		*DCI_xyz_gamma,
@@ -443,6 +451,7 @@ static PF_Err DoRender(
 			PF_ParamValue operation		= DCI_operation->u.pd.value;
 			PF_ParamValue curveP		= DCI_curve->u.pd.value;
 			PF_FpLong gamma				= DCI_gamma->u.fs_d.value;
+			PF_ParamValue color_spaceP	= DCI_rgb_color_space->u.pd.value;
 			PF_ParamValue adaptationP	= DCI_adaptation->u.pd.value;
 			PF_ParamValue temperature	= DCI_temperature->u.sd.value;
 			PF_FpLong xyz_gamma			= DCI_xyz_gamma->u.fs_d.value;
@@ -450,9 +459,14 @@ static PF_Err DoRender(
 			
 			DCIconverterBase::ResponseCurve curve = curveP == CURVE_sRGB ? DCIconverterBase::sRGB :
 													curveP == CURVE_Rec709 ? DCIconverterBase::Rec709 :
+													curveP == CURVE_ProPhotoRGB ? DCIconverterBase::ProPhotoRGB :
 													DCIconverterBase::Gamma;
+			
+			DCIconverterBase::ColorSpace color = color_spaceP == RGB_COLOR_SPACE_PROPHOTO ? DCIconverterBase::ProPhotoRGB_ROMM :
+													DCIconverterBase::sRGB_Rec709;
 													
 			DCIconverterBase::ChromaticAdaptation adaptation =	adaptationP == ADAPTATION_NONE ? DCIconverterBase::None :
+																adaptationP == ADAPTATION_D50 ? DCIconverterBase::D50 :
 																adaptationP == ADAPTATION_D55 ? DCIconverterBase::D55 :
 																adaptationP == ADAPTATION_D65 ? DCIconverterBase::D65 :
 																DCIconverterBase::Temp;
@@ -461,11 +475,11 @@ static PF_Err DoRender(
 			
 			if(operation == OPERATION_XYZ_TO_RGB)
 			{
-				converter = new ReverseDCIconverter(curve, gamma, adaptation, temperature, xyz_gamma);
+				converter = new ReverseDCIconverter(curve, gamma, color, adaptation, temperature, xyz_gamma);
 			}
 			else
 			{
-				converter = new ForwardDCIconverter(curve, gamma, adaptation, temperature, xyz_gamma);
+				converter = new ForwardDCIconverter(curve, gamma, color, adaptation, temperature, xyz_gamma);
 			}
 			
 			
@@ -581,6 +595,7 @@ SmartRender(
 	PF_ParamDef DCI_operation,
 				DCI_curve,
 				DCI_gamma,
+				DCI_rgb_color_space,
 				DCI_adaptation,
 				DCI_temperature,
 				DCI_xyz_gamma;
@@ -588,8 +603,9 @@ SmartRender(
 	// zero-out parameters
 	AEFX_CLR_STRUCT(DCI_operation);
 	AEFX_CLR_STRUCT(DCI_curve);
-	AEFX_CLR_STRUCT(DCI_adaptation);
 	AEFX_CLR_STRUCT(DCI_gamma);
+	AEFX_CLR_STRUCT(DCI_rgb_color_space);
+	AEFX_CLR_STRUCT(DCI_adaptation);
 	AEFX_CLR_STRUCT(DCI_temperature);
 	AEFX_CLR_STRUCT(DCI_xyz_gamma);
 	
@@ -609,6 +625,7 @@ SmartRender(
 	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_OPERATION,		&DCI_operation )	);
 	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_CURVE,			&DCI_curve )	);
 	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_GAMMA,			&DCI_gamma )	);
+	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_RGB_COLOR_SPACE,	&DCI_rgb_color_space )	);
 	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_ADAPTATION,		&DCI_adaptation )	);
 	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_TEMPERATURE,		&DCI_temperature )	);
 	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_XYZ_GAMMA,		&DCI_xyz_gamma )	);
@@ -618,6 +635,7 @@ SmartRender(
 						&DCI_operation, 
 						&DCI_curve,
 						&DCI_gamma,
+						&DCI_rgb_color_space,
 						&DCI_adaptation,
 						&DCI_temperature,
 						&DCI_xyz_gamma,
@@ -628,6 +646,7 @@ SmartRender(
 	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_operation )	);
 	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_curve )	);
 	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_gamma )	);
+	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_rgb_color_space )	);
 	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_adaptation ) );
 	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_temperature )	);
 	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_xyz_gamma )	);
@@ -648,6 +667,7 @@ static PF_Err Render(
 					params[DCI_OPERATION],
 					params[DCI_CURVE],
 					params[DCI_GAMMA],
+					params[DCI_RGB_COLOR_SPACE],
 					params[DCI_ADAPTATION],
 					params[DCI_TEMPERATURE],
 					params[DCI_XYZ_GAMMA],

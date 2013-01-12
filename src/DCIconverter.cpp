@@ -43,8 +43,8 @@
 #include "DCIconverter.h"
 
 
-DCIconverterBase::DCIconverterBase(ChromaticAdaptation adapt, int temperature) :
-	_rgb2xyz_matrix( RGBtoXYZmatrix(adapt, temperature) )
+DCIconverterBase::DCIconverterBase(ColorSpace color, ChromaticAdaptation adapt, int temperature) :
+	_rgb2xyz_matrix( RGBtoXYZmatrix(color, adapt, temperature) )
 {
 
 }
@@ -89,7 +89,7 @@ DCIconverterBase::TemperatureToWhite(int temperature)
 
 
 DCIconverterBase::Matrix
-DCIconverterBase::RGBtoXYZmatrix(const XYZvalue *endWhite)
+DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, const XYZvalue *endWhite)
 {
 	// This matrix is part of the sRGB standard.
 	// http://en.wikipedia.org/wiki/SRGB
@@ -104,6 +104,16 @@ DCIconverterBase::RGBtoXYZmatrix(const XYZvalue *endWhite)
 		 0.2126, 0.7152, 0.0722,
 		 0.0193, 0.1192, 0.9505);
 	
+
+	// The ProPhoto RGB spec gives only the XYZ->RGB matrix.
+	// Just remember to use the inverse of this for RGB->XYZ.
+	// http://www.color.org/ROMMRGB.pdf
+	
+	static const Matrix XYZtoProPhotoRGB_spec
+		(1.3460, -0.2556, -0.0511,
+		-0.5446,  1.5082,  0.0205,
+		 0.0000,  0.0000,  1.2123);
+		 
 	
 	// To calculate the chromatic adaptation matrix, we use the Bradford method.
 	// The Bradford method is also used by ICC profiles.
@@ -123,24 +133,41 @@ DCIconverterBase::RGBtoXYZmatrix(const XYZvalue *endWhite)
 	
 	// Imath matrix math is column-major, so we use the transpose of these matrices.
 	static const Matrix sRGBtoXYZ = sRGBtoXYZ_spec.transposed();
+	static const Matrix ProPhotoRGBtoXYZ = XYZtoProPhotoRGB_spec.inverse().transposed();
 	static const Matrix bradfordCPM = bradfordCPM_spec.transposed();
 	static const Matrix inverseBradfordCPM = inverseBradfordCPM_spec.transposed();
 	
 	
-	// if we're not doing chromatic adaptation, just return the sRGBtoXYZ matrix
+	const Matrix RGBtoXYZ = (color == ProPhotoRGB_ROMM ? ProPhotoRGBtoXYZ : sRGBtoXYZ);
+	
+	
+	// if we're not doing chromatic adaptation, just return the RGBtoXYZ matrix
 	if(endWhite == NULL)
-		return sRGBtoXYZ;
+		return RGBtoXYZ;
 	
 	
-	// sRGB/Rec. 709 uses the D65 white point, which has these xyY coordinates
-	// which we convert to XYZ and use as our source white point.
-	static const double D65wp_x = 0.3127;
-	static const double D65wp_y = 0.3290;
-	static const double D65wp_Y = 1.0000;
+	// sRGB/Rec. 709 uses the D65 white point, ProPhoto RGB uses D50.
+	// We convert to XYZ and use as our source white point.
+	double wp_x, wp_y, wp_Y;
 	
-	XYZvalue D65white(	(D65wp_Y / D65wp_y) * D65wp_x,
-						D65wp_Y,
-						(D65wp_Y / D65wp_y) * (1 - D65wp_x - D65wp_y) );
+	if(color == ProPhotoRGB_ROMM)
+	{
+		// D50
+		wp_x = 0.3457;
+		wp_y = 0.3585;
+		wp_Y = 1.0000;
+	}
+	else
+	{
+		// D65
+		wp_x = 0.3127;
+		wp_y = 0.3290;
+		wp_Y = 1.0000;
+	}
+	
+	XYZvalue white(	(wp_Y / wp_y) * wp_x,
+					wp_Y,
+					(wp_Y / wp_y) * (1 - wp_x - wp_y) );
 	
 	
 	
@@ -148,7 +175,7 @@ DCIconverterBase::RGBtoXYZmatrix(const XYZvalue *endWhite)
 	// We must do this because sRGB and Rec. 709 use the D65 white point,
 	// which is roughly a 6504K color temperature.  But many projector bulbs are
 	// warmer/redder (which ironically means they have a lower color temperature).
-	Imath::V3f ratio( (*endWhite * bradfordCPM) / (D65white * bradfordCPM) );
+	Imath::V3f ratio( (*endWhite * bradfordCPM) / (white * bradfordCPM) );
 
 	Matrix ratioMat
 		(ratio[0], 0,        0,       
@@ -161,12 +188,12 @@ DCIconverterBase::RGBtoXYZmatrix(const XYZvalue *endWhite)
 	// Our final sRGB/Rec. 709 to DCI XYZ matrix is the product of the
 	// sRGB->XYZ and chromatic adaptation matrices.  That's what we return.
 	
-	return sRGBtoXYZ * chromaticAdaptation;
+	return RGBtoXYZ * chromaticAdaptation;
 }
 
 
 DCIconverterBase::Matrix
-DCIconverterBase::RGBtoXYZmatrix(ChromaticAdaptation adapt, int temperature)
+DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, ChromaticAdaptation adapt, int temperature)
 {
 	XYZvalue *whitePoint = NULL;
 	
@@ -184,6 +211,15 @@ DCIconverterBase::RGBtoXYZmatrix(ChromaticAdaptation adapt, int temperature)
 		{
 			float x, y, Y;
 			
+			// Here's a good page for some of these values:
+			// http://hackage.haskell.org/packages/archive/colour/2.3.3/doc/html/src/Data-Colour-CIE-Illuminant.html
+			
+			if(adapt == D50)
+			{
+				x = 0.3457;
+				y = 0.3585;
+				Y = 1.0000;
+			}
 			if(adapt == D55)
 			{
 				x = 0.3324;
@@ -204,14 +240,14 @@ DCIconverterBase::RGBtoXYZmatrix(ChromaticAdaptation adapt, int temperature)
 		}
 	}
 	
-	return RGBtoXYZmatrix(whitePoint);
+	return RGBtoXYZmatrix(color, whitePoint);
 }
 
 
 ForwardDCIconverter::ForwardDCIconverter(ResponseCurve curve, float gamma,
-											ChromaticAdaptation adapt, int temperature,
+											ColorSpace color, ChromaticAdaptation adapt, int temperature,
 											float xyz_gamma) :
-	DCIconverterBase(adapt, temperature),
+	DCIconverterBase(color, adapt, temperature),
 	_curve(curve),
 	_gamma(gamma),
 	_xyz_gamma(xyz_gamma),
@@ -250,6 +286,12 @@ ForwardDCIconverter::convert(const Pixel &pix) const
 		r = Rec709toLin(r);
 		g = Rec709toLin(g);
 		b = Rec709toLin(b);
+	}
+	else if(_curve == ProPhotoRGB)
+	{
+		r = ProPhotoRGBtoLin(r);
+		g = ProPhotoRGBtoLin(g);
+		b = ProPhotoRGBtoLin(b);
 	}
 	else if(_curve == Gamma)
 	{
@@ -295,10 +337,21 @@ ForwardDCIconverter::Rec709toLin(float in)
 }
 
 
+inline float
+ForwardDCIconverter::ProPhotoRGBtoLin(float in)
+{
+	// ProPhotoRGB to linear transfer function.  Inverse of LinToProPhotoRGB spec.
+	// http://en.wikipedia.org/wiki/ProPhoto_RGB_color_space
+	// http://www.color.org/ROMMRGB.pdf
+	
+	return (in < 0.031248f ? (in / 16.f) : powf(in, 1.8f));
+}
+
+
 ReverseDCIconverter::ReverseDCIconverter(ResponseCurve curve, float gamma,
-											ChromaticAdaptation adapt, int temperature,
+											ColorSpace color, ChromaticAdaptation adapt, int temperature,
 											float xyz_gamma) :
-	DCIconverterBase(adapt, temperature),
+	DCIconverterBase(color, adapt, temperature),
 	_curve(curve),
 	_gamma(gamma),
 	_xyz_gamma(xyz_gamma),
@@ -342,6 +395,12 @@ ReverseDCIconverter::convert(const Pixel &pix) const
 		g = LinToRec709(g);
 		b = LinToRec709(b);
 	}
+	else if(_curve == ProPhotoRGB)
+	{
+		r = LinToProPhotoRGB(r);
+		g = LinToProPhotoRGB(g);
+		b = LinToProPhotoRGB(b);
+	}
 	else if(_curve == Gamma)
 	{
 		r = GammaFunc(r, 1.f / _gamma);
@@ -370,3 +429,13 @@ ReverseDCIconverter::LinToRec709(float in)
 	
 	return (in <= 0.018f ? (in * 4.5f) : 1.099f * powf(in, 0.45f) - 0.099f);
 }
+
+
+inline float
+ReverseDCIconverter::LinToProPhotoRGB(float in)
+{
+	// linear to ProPhoto RGB transfer function
+	
+	return (in < 0.001953f ? (in * 16.f) : powf(in, 1.f / 1.8f));
+}
+

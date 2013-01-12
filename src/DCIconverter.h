@@ -53,19 +53,26 @@ class DCIconverterBase
 {
   public:
 	typedef enum {
+		sRGB_Rec709,
+		ProPhotoRGB_ROMM
+	} ColorSpace;
+  
+	typedef enum {
 		sRGB,
 		Rec709,
+		ProPhotoRGB,
 		Gamma
 	} ResponseCurve;
 	
 	typedef enum {
 		None,
+		D50,
 		D55,
 		D65,
 		Temp
 	} ChromaticAdaptation;
   
-	DCIconverterBase(ChromaticAdaptation adapt, int temperature);
+	DCIconverterBase(ColorSpace color, ChromaticAdaptation adapt, int temperature);
 						
 	virtual ~DCIconverterBase() {}
 	
@@ -82,8 +89,8 @@ class DCIconverterBase
 	typedef Imath::V3f XYZvalue;
 	static XYZvalue TemperatureToWhite(int temperature);
 	
-	static Matrix RGBtoXYZmatrix(const XYZvalue *endWhite);
-	static Matrix RGBtoXYZmatrix(ChromaticAdaptation adapt, int temperature);
+	static Matrix RGBtoXYZmatrix(ColorSpace color, const XYZvalue *endWhite);
+	static Matrix RGBtoXYZmatrix(ColorSpace color, ChromaticAdaptation adapt, int temperature);
 };
 
 
@@ -91,7 +98,7 @@ class ForwardDCIconverter : public DCIconverterBase
 {
   public:
 	ForwardDCIconverter(ResponseCurve curve, float gamma,
-						ChromaticAdaptation adapt, int temperature,
+						ColorSpace color, ChromaticAdaptation adapt, int temperature,
 						float xyz_gamma);
 						
 	virtual ~ForwardDCIconverter() {}
@@ -107,6 +114,7 @@ class ForwardDCIconverter : public DCIconverterBase
   private:
 	static inline float sRGBtoLin(float in);
 	static inline float Rec709toLin(float in);
+	static inline float ProPhotoRGBtoLin(float in);
 };
 
 
@@ -114,7 +122,7 @@ class ReverseDCIconverter : public DCIconverterBase
 {
   public:
 	ReverseDCIconverter(ResponseCurve curve, float gamma,
-						ChromaticAdaptation adapt, int temperature,
+						ColorSpace color, ChromaticAdaptation adapt, int temperature,
 						float xyz_gamma);
 						
 	virtual ~ReverseDCIconverter() {}
@@ -130,6 +138,7 @@ class ReverseDCIconverter : public DCIconverterBase
   private:
 	static inline float LinTosRGB(float in);
 	static inline float LinToRec709(float in);
+	static inline float LinToProPhotoRGB(float in);
 };
 
 
