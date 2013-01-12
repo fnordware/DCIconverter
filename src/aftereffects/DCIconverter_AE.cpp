@@ -334,8 +334,8 @@ struct PremierePixel {
 
 
 typedef struct {
-	A_long				width;
-	DCIconverterBase	*converter;
+	A_long					width;
+	const DCIconverterBase	*converter;
 } ProcessData;
 
 
@@ -457,7 +457,7 @@ static PF_Err DoRender(
 																adaptationP == ADAPTATION_D65 ? DCIconverterBase::D65 :
 																DCIconverterBase::Temp;
 			
-			DCIconverterBase *converter = NULL;
+			const DCIconverterBase *converter = NULL;
 			
 			if(operation == OPERATION_XYZ_TO_RGB)
 			{
