@@ -224,7 +224,7 @@ ForwardDCIconverter::ForwardDCIconverter(ResponseCurve curve, float gamma,
 static inline float
 GammaFunc(float in, float gamma)
 {
-	return (in <= 0.f ? 0.f : powf(in, gamma));
+	return (in < 0.f ? -powf(-in, gamma) : powf(in, gamma) );
 }
 
 
