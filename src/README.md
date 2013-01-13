@@ -1,7 +1,7 @@
 DCI Converter
 =============
 
-This is some code for converting RGB images to XYZ and back again.
+Some code for converting RGB images to XYZ and back again.
 
 This all started because people were using my [**j2k**](http://www.fnordware.com/j2k) plug-in for Premiere Pro to write out [Digital Cinema](http://en.wikipedia.org/wiki/Digital_Cinema_Package) frames, which are JPEG 2000 images in XYZ color space. Some questioned the way I was doing my XYZ conversion, so I figured the best thing to do was make the code available for public scrutiny.
 
@@ -90,9 +90,9 @@ Your monitor is sRGB while a video camera shoots in Rec. 709. Actually, that's a
 
 ###Chromatic Adaptation
 
-Your vision automatically adjust for different lighting conditions using [chromatic adaptation](http://en.wikipedia.org/wiki/Chromatic_adaptation). An image projected in an office setting will appear more blue when viewed in a theater without chromatic adaptation.
+Your vision automatically adjusts for different lighting conditions using [chromatic adaptation](http://en.wikipedia.org/wiki/Chromatic_adaptation). An image projected in an office setting will appear more blue when viewed in a theater unless this is taken into account.
 
-DCI Converter uses the [Bradford method](http://www.brucelindbloom.com/index.html?Eqn_ChromAdapt.html) to perform chromatic adaptation between the [illuminant](http://en.wikipedia.org/wiki/Standard_illuminant) named by your chosen RGB Color Space and an illuminant or [**color temperature**](http://en.wikipedia.org/wiki/Color_temperature) you specify.
+DCI Converter uses the [Bradford method](http://www.brucelindbloom.com/index.html?Eqn_ChromAdapt.html) to perform chromatic adaptation between the [illuminant](http://en.wikipedia.org/wiki/Standard_illuminant) named by your RGB Color Space and an illuminant or [**color temperature**](http://en.wikipedia.org/wiki/Color_temperature) you specify.
 
 sRGB and Rec. 709 use [D65](http://en.wikipedia.org/wiki/Illuminant_D65) while ProPhoto RGB uses [D50](http://en.wikipedia.org/wiki/Standard_illuminant#Illuminant_series_D) as the source illuminant.
 
