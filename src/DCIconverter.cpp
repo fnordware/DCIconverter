@@ -13,9 +13,6 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-// *	   Neither the name of Industrial Light & Magic nor the names of
-// its contributors may be used to endorse or promote products derived
-// from this software without specific prior written permission. 
 // 
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -41,6 +38,8 @@
 
 
 #include "DCIconverter.h"
+
+#include <assert.h>
 
 
 DCIconverterBase::DCIconverterBase(ColorSpace color, ChromaticAdaptation adapt, int temperature) :
@@ -220,7 +219,7 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, ChromaticAdaptation adapt, in
 				y = 0.3585;
 				Y = 1.0000;
 			}
-			if(adapt == D55)
+			else if(adapt == D55)
 			{
 				x = 0.3324;
 				y = 0.3474;
@@ -298,6 +297,10 @@ ForwardDCIconverter::convert(const Pixel &pix) const
 		r = GammaFunc(r, _gamma);
 		g = GammaFunc(g, _gamma);
 		b = GammaFunc(b, _gamma);
+	}
+	else
+	{
+		assert(_curve == Linear);
 	}
 
 	
@@ -406,6 +409,10 @@ ReverseDCIconverter::convert(const Pixel &pix) const
 		r = GammaFunc(r, 1.f / _gamma);
 		g = GammaFunc(g, 1.f / _gamma);
 		b = GammaFunc(b, 1.f / _gamma);
+	}
+	else
+	{
+		assert(_curve == Linear);
 	}
 	
 	

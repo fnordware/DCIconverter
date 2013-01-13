@@ -13,9 +13,6 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-// *	   Neither the name of Industrial Light & Magic nor the names of
-// its contributors may be used to endorse or promote products derived
-// from this software without specific prior written permission. 
 // 
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -460,6 +457,7 @@ static PF_Err DoRender(
 			DCIconverterBase::ResponseCurve curve = curveP == CURVE_sRGB ? DCIconverterBase::sRGB :
 													curveP == CURVE_Rec709 ? DCIconverterBase::Rec709 :
 													curveP == CURVE_ProPhotoRGB ? DCIconverterBase::ProPhotoRGB :
+													curveP == CURVE_Linear ? DCIconverterBase::Linear :
 													DCIconverterBase::Gamma;
 			
 			DCIconverterBase::ColorSpace color = color_spaceP == RGB_COLOR_SPACE_PROPHOTO ? DCIconverterBase::ProPhotoRGB_ROMM :

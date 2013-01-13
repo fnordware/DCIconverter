@@ -212,12 +212,8 @@
 		0867D691FE84028FC02AAC07 /* IlmBase */ = {
 			isa = PBXGroup;
 			children = (
+				2A6B243916A34E28000226AF /* ilmbase-1.0.3 */,
 				2A6D4D9315CE02F0006BADE7 /* IlmBaseConfig.h */,
-				2A6D4C5D15CDEB54006BADE7 /* Half */,
-				2A6D4C6615CDEB54006BADE7 /* Iex */,
-				2A6D4C7115CDEB54006BADE7 /* IexMath */,
-				2A6D4C7815CDEB54006BADE7 /* IlmThread */,
-				2A6D4C8A15CDEB54006BADE7 /* Imath */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DDFF38A45A11DB9C8B /* Products */,
 			);
@@ -229,6 +225,19 @@
 			children = (
 			);
 			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		2A6B243916A34E28000226AF /* ilmbase-1.0.3 */ = {
+			isa = PBXGroup;
+			children = (
+				2A6D4C5D15CDEB54006BADE7 /* Half */,
+				2A6D4C6615CDEB54006BADE7 /* Iex */,
+				2A6D4C7115CDEB54006BADE7 /* IexMath */,
+				2A6D4C7815CDEB54006BADE7 /* IlmThread */,
+				2A6D4C8A15CDEB54006BADE7 /* Imath */,
+			);
+			name = "ilmbase-1.0.3";
+			path = "../../../ext/ilmbase-1.0.3";
 			sourceTree = "<group>";
 		};
 		2A6D4C5D15CDEB54006BADE7 /* Half */ = {
@@ -243,9 +252,8 @@
 				2A6D4C6315CDEB54006BADE7 /* halfLimits.h */,
 				2A6D4C6515CDEB54006BADE7 /* toFloat.cpp */,
 			);
-			name = Half;
-			path = "../../../ext/ilmbase-1.0.3/Half";
-			sourceTree = SOURCE_ROOT;
+			path = Half;
+			sourceTree = "<group>";
 		};
 		2A6D4C6615CDEB54006BADE7 /* Iex */ = {
 			isa = PBXGroup;
@@ -259,9 +267,8 @@
 				2A6D4C6E15CDEB54006BADE7 /* IexThrowErrnoExc.cpp */,
 				2A6D4C6F15CDEB54006BADE7 /* IexThrowErrnoExc.h */,
 			);
-			name = Iex;
-			path = "../../../ext/ilmbase-1.0.3/Iex";
-			sourceTree = SOURCE_ROOT;
+			path = Iex;
+			sourceTree = "<group>";
 		};
 		2A6D4C7115CDEB54006BADE7 /* IexMath */ = {
 			isa = PBXGroup;
@@ -272,9 +279,8 @@
 				2A6D4C7515CDEB54006BADE7 /* IexMathFpu.h */,
 				2A6D4C7615CDEB54006BADE7 /* IexMathIeeeExc.h */,
 			);
-			name = IexMath;
-			path = "../../../ext/ilmbase-1.0.3/IexMath";
-			sourceTree = SOURCE_ROOT;
+			path = IexMath;
+			sourceTree = "<group>";
 		};
 		2A6D4C7815CDEB54006BADE7 /* IlmThread */ = {
 			isa = PBXGroup;
@@ -292,9 +298,8 @@
 				2A6D4C8515CDEB54006BADE7 /* IlmThreadSemaphorePosix.cpp */,
 				2A6D4C8615CDEB54006BADE7 /* IlmThreadSemaphorePosixCompat.cpp */,
 			);
-			name = IlmThread;
-			path = "../../../ext/ilmbase-1.0.3/IlmThread";
-			sourceTree = SOURCE_ROOT;
+			path = IlmThread;
+			sourceTree = "<group>";
 		};
 		2A6D4C8A15CDEB54006BADE7 /* Imath */ = {
 			isa = PBXGroup;
@@ -337,9 +342,8 @@
 				2A6D4CAF15CDEB54006BADE7 /* ImathVec.h */,
 				2A6D4CB015CDEB54006BADE7 /* ImathVecAlgo.h */,
 			);
-			name = Imath;
-			path = "../../../ext/ilmbase-1.0.3/Imath";
-			sourceTree = SOURCE_ROOT;
+			path = Imath;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
