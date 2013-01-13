@@ -83,7 +83,7 @@ To convert to [XYZ color space](http://en.wikipedia.org/wiki/XYZ_color_space), w
 
 [**sRGB**](http://www.color.org/chardata/rgb/srgb.xalter) and [**Rec. 709**](http://en.wikipedia.org/wiki/Rec._709) use the same color primaries (but different transfer functions), so they are lumped together into one option.
 
-[**ProPhoto RGB**](http://en.wikipedia.org/wiki/ProPhoto_RGB_color_space) (also known as [ROMM RGB](http://www.color.org/ROMMRGB.pdf) uses different primaries, and has a much wider [gamut](http://en.wikipedia.org/wiki/Gamut).
+[**ProPhoto RGB**](http://en.wikipedia.org/wiki/ProPhoto_RGB_color_space) (also known as [ROMM RGB](http://www.color.org/ROMMRGB.pdf)) uses different primaries, and has a much wider [gamut](http://en.wikipedia.org/wiki/Gamut).
 
 Your monitor is sRGB while a video camera shoots in Rec. 709. Actually, that's a gross oversimplification, but will have to do for this document. Getting your pixels into ProPhoto RGB usually involves [ICC Profiles](http://en.wikipedia.org/wiki/ICC_profile) in Photoshop or another program.
 
