@@ -461,10 +461,12 @@ static PF_Err DoRender(
 			DCIconverterBase::ResponseCurve curve = curveP == CURVE_sRGB ? DCIconverterBase::sRGB :
 													curveP == CURVE_Rec709 ? DCIconverterBase::Rec709 :
 													curveP == CURVE_ProPhotoRGB ? DCIconverterBase::ProPhotoRGB :
+													curveP == CURVE_P3 ? DCIconverterBase::P3 :
 													curveP == CURVE_Linear ? DCIconverterBase::Linear :
 													DCIconverterBase::Gamma;
 			
-			DCIconverterBase::ColorSpace color = color_spaceP == RGB_COLOR_SPACE_PROPHOTO ? DCIconverterBase::ProPhotoRGB_ROMM :
+			DCIconverterBase::ColorSpace color =	color_spaceP == RGB_COLOR_SPACE_PROPHOTO ? DCIconverterBase::ProPhotoRGB_ROMM :
+													color_spaceP == RGB_COLOR_SPACE_P3 ? DCIconverterBase::P3_RGB :
 													DCIconverterBase::sRGB_Rec709;
 													
 			DCIconverterBase::ChromaticAdaptation adaptation =	adaptationP == ADAPTATION_NONE ? DCIconverterBase::None :

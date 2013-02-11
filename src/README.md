@@ -74,6 +74,7 @@ DCI Converter offers the following response curves:
 * [**sRGB**](http://en.wikipedia.org/wiki/SRGB)
 * [**Rec. 709**](http://www.poynton.com/notes/colour_and_gamma/GammaFAQ.html#gamma_correction)
 * [**ProPhoto RGB**](http://en.wikipedia.org/wiki/ProPhoto_RGB_color_space)
+* **DCI P3** (gamma 2.6)
 * **Linear** (no response curve required, equivalent to gamma 1.0)
 * **Gamma** (a regular power function using the exponent specified in the Gamma parameter)
 
@@ -86,6 +87,8 @@ To convert to [XYZ color space](http://en.wikipedia.org/wiki/XYZ_color_space), w
 
 [**ProPhoto RGB**](http://en.wikipedia.org/wiki/ProPhoto_RGB_color_space) (also known as [ROMM RGB](http://www.color.org/ROMMRGB.pdf)) uses different primaries, and has a much wider [gamut](http://en.wikipedia.org/wiki/Gamut).
 
+[**DCI P3**](http://www.hp.com/united-states/campaigns/workstations/pdfs/lp2480zx-dci--p3-emulation.pdf) represents the gamut of a 3-color DCI projector.
+
 Your monitor is sRGB while a video camera shoots in Rec. 709. Actually, that's a gross oversimplification, but will have to do for this document. Getting your pixels into ProPhoto RGB usually involves [ICC Profiles](http://en.wikipedia.org/wiki/ICC_profile) in Photoshop or another program.
 
 
@@ -95,7 +98,7 @@ Your vision automatically adjusts for different lighting conditions using [chrom
 
 DCI Converter uses the [Bradford method](http://www.brucelindbloom.com/index.html?Eqn_ChromAdapt.html) to perform chromatic adaptation between the [illuminant](http://en.wikipedia.org/wiki/Standard_illuminant) named by your RGB Color Space and an illuminant or [**color temperature**](http://en.wikipedia.org/wiki/Color_temperature) you specify.
 
-sRGB and Rec. 709 use [D65](http://en.wikipedia.org/wiki/Illuminant_D65) while ProPhoto RGB uses [D50](http://en.wikipedia.org/wiki/Standard_illuminant#Illuminant_series_D) as the source illuminant.
+sRGB and Rec. 709 use [D65](http://en.wikipedia.org/wiki/Illuminant_D65) while ProPhoto RGB uses [D50](http://en.wikipedia.org/wiki/Standard_illuminant#Illuminant_series_D) as the source illuminant. P3 is roughly 5900K.
 
 The DCI Converter plug-in defaults to using a Color Temperature of 5900K for chromatic adaptation because that's the setting used by the After Effects DCI profile, "DCDM X'Y'Z'(Gamma 2.6) 5900K (by Adobe)".
 

@@ -114,6 +114,54 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, const XYZvalue *endWhite)
 		 0.0000,  0.0000,  1.2123);
 		 
 	
+	// DCI-P3 space (SMPTE-231-2)
+	// Can't find an official spec, but here's a doc:
+	// http://www.hp.com/united-states/campaigns/workstations/pdfs/lp2480zx-dci--p3-emulation.pdf
+
+	static const float P3_r_x = 0.680;	static const float P3_r_y = 0.320;
+	static const float P3_g_x = 0.265;	static const float P3_g_y = 0.690;
+	static const float P3_b_x = 0.150;	static const float P3_b_y = 0.060;
+	static const float P3_w_x = 0.314;	static const float P3_w_y = 0.351;
+
+	// chromaticities to RGBtoXYZ matrix steps taken from
+	// http://www.ryanjuckett.com/programming/graphics/27-rgb-color-space-conversion?start=6
+	
+	static const float P3_r_z = 1.f - P3_r_x - P3_r_y;
+	static const float P3_g_z = 1.f - P3_g_x - P3_g_y;
+	static const float P3_b_z = 1.f - P3_b_x - P3_b_y;
+	static const float P3_w_z = 1.f - P3_w_x - P3_w_y;
+	
+	XYZvalue P3_w_XYZ = (1.f / P3_w_y) * Imath::V3f(P3_w_x, P3_w_y, P3_w_z);
+	
+	
+	static const Matrix P3_chromaticity_mat
+		(P3_r_x, P3_g_x, P3_b_x,
+		 P3_r_y, P3_g_y, P3_b_y,
+		 P3_r_z, P3_g_z, P3_b_z);
+	
+		 
+	//static const Imath::V3f P3_RGB_XYZ_sum = P3_chromaticity_mat.inverse() * P3_w_XYZ; // can't do this in Imath, so...
+	static const Matrix P3_cmi = P3_chromaticity_mat.inverse();
+	
+	Imath::V3f P3_chromaticity_mat_inv_col1(P3_cmi[0][0], P3_cmi[1][0], P3_cmi[2][0]);
+	Imath::V3f P3_chromaticity_mat_inv_col2(P3_cmi[0][1], P3_cmi[1][1], P3_cmi[2][1]);
+	Imath::V3f P3_chromaticity_mat_inv_col3(P3_cmi[0][2], P3_cmi[1][2], P3_cmi[2][2]);
+	
+	static const Imath::V3f P3_RGB_XYZ_sum =
+		(P3_w_XYZ[0] * P3_chromaticity_mat_inv_col1) +
+		(P3_w_XYZ[1] * P3_chromaticity_mat_inv_col2) +
+		(P3_w_XYZ[2] * P3_chromaticity_mat_inv_col3);
+	
+	
+	static const Matrix P3_RGB_XYZ_sum_mat
+		(P3_RGB_XYZ_sum[0], 0,        0,       
+		 0,        P3_RGB_XYZ_sum[1], 0,       
+		 0,        0,        P3_RGB_XYZ_sum[2]);
+	
+	
+	static const Matrix P3toXYZ_spec = P3_chromaticity_mat * P3_RGB_XYZ_sum_mat;
+	
+	
 	// To calculate the chromatic adaptation matrix, we use the Bradford method.
 	// The Bradford method is also used by ICC profiles.
 	// Here's the Bradford Cone Primary Matrix and its inverse.
@@ -133,11 +181,14 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, const XYZvalue *endWhite)
 	// Imath matrix math is column-major, so we use the transpose of these matrices.
 	static const Matrix sRGBtoXYZ = sRGBtoXYZ_spec.transposed();
 	static const Matrix ProPhotoRGBtoXYZ = XYZtoProPhotoRGB_spec.inverse().transposed();
+	static const Matrix P3toXYZ = P3toXYZ_spec.transposed();
 	static const Matrix bradfordCPM = bradfordCPM_spec.transposed();
 	static const Matrix inverseBradfordCPM = inverseBradfordCPM_spec.transposed();
 	
 	
-	const Matrix RGBtoXYZ = (color == ProPhotoRGB_ROMM ? ProPhotoRGBtoXYZ : sRGBtoXYZ);
+	const Matrix RGBtoXYZ = (color == ProPhotoRGB_ROMM ? ProPhotoRGBtoXYZ :
+							 color == P3_RGB ? P3toXYZ :
+							 sRGBtoXYZ );
 	
 	
 	// if we're not doing chromatic adaptation, just return the RGBtoXYZ matrix
@@ -145,7 +196,7 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, const XYZvalue *endWhite)
 		return RGBtoXYZ;
 	
 	
-	// sRGB/Rec. 709 uses the D65 white point, ProPhoto RGB uses D50.
+	// sRGB/Rec. 709 uses the D65 white point, ProPhoto RGB uses D50. P3 is roughly 5900K?
 	// We convert to XYZ and use as our source white point.
 	double wp_x, wp_y, wp_Y;
 	
@@ -154,6 +205,12 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, const XYZvalue *endWhite)
 		// D50
 		wp_x = 0.3457;
 		wp_y = 0.3585;
+		wp_Y = 1.0000;
+	}
+	else if(color == P3_RGB)
+	{
+		wp_x = P3_w_x;
+		wp_y = P3_w_y;
 		wp_Y = 1.0000;
 	}
 	else
@@ -293,6 +350,12 @@ ForwardDCIconverter::convert(const Pixel &pix) const
 		g = ProPhotoRGBtoLin(g);
 		b = ProPhotoRGBtoLin(b);
 	}
+	else if(_curve == P3)
+	{
+		r = GammaFunc(r, 2.6f);
+		g = GammaFunc(g, 2.6f);
+		b = GammaFunc(b, 2.6f);
+	}
 	else if(_curve == Gamma)
 	{
 		r = GammaFunc(r, _gamma);
@@ -423,6 +486,12 @@ ReverseDCIconverter::convert(const Pixel &pix) const
 		r = LinToProPhotoRGB(r);
 		g = LinToProPhotoRGB(g);
 		b = LinToProPhotoRGB(b);
+	}
+	else if(_curve == P3)
+	{
+		r = GammaFunc(r, 1.f / 2.6f);
+		g = GammaFunc(g, 1.f / 2.6f);
+		b = GammaFunc(b, 1.f / 2.6f);
 	}
 	else if(_curve == Gamma)
 	{

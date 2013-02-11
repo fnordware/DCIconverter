@@ -51,13 +51,15 @@ class DCIconverterBase
   public:
 	typedef enum {
 		sRGB_Rec709,
-		ProPhotoRGB_ROMM
+		ProPhotoRGB_ROMM,
+		P3_RGB
 	} ColorSpace;
   
 	typedef enum {
 		sRGB,
 		Rec709,
 		ProPhotoRGB,
+		P3,
 		Linear,
 		Gamma
 	} ResponseCurve;
