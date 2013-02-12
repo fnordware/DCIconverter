@@ -140,18 +140,7 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, const XYZvalue *endWhite)
 		 P3_r_z, P3_g_z, P3_b_z);
 	
 		 
-	//static const Imath::V3f P3_RGB_XYZ_sum = P3_chromaticity_mat.inverse() * P3_w_XYZ; // can't do this in Imath, so...
-	static const Matrix P3_cmi = P3_chromaticity_mat.inverse();
-	
-	Imath::V3f P3_chromaticity_mat_inv_col1(P3_cmi[0][0], P3_cmi[1][0], P3_cmi[2][0]);
-	Imath::V3f P3_chromaticity_mat_inv_col2(P3_cmi[0][1], P3_cmi[1][1], P3_cmi[2][1]);
-	Imath::V3f P3_chromaticity_mat_inv_col3(P3_cmi[0][2], P3_cmi[1][2], P3_cmi[2][2]);
-	
-	static const Imath::V3f P3_RGB_XYZ_sum =
-		(P3_w_XYZ[0] * P3_chromaticity_mat_inv_col1) +
-		(P3_w_XYZ[1] * P3_chromaticity_mat_inv_col2) +
-		(P3_w_XYZ[2] * P3_chromaticity_mat_inv_col3);
-	
+	static const Imath::V3f P3_RGB_XYZ_sum = P3_w_XYZ * P3_chromaticity_mat.transposed().inverse();
 	
 	static const Matrix P3_RGB_XYZ_sum_mat
 		(P3_RGB_XYZ_sum[0], 0,        0,       
