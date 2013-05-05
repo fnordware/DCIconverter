@@ -306,23 +306,24 @@ static inline float Clamp(float in)
 	return (in >= 1.f ? 1.f : in <= 0.f ? 0.f : in);
 }
 
+
 template <typename CHAN_TYPE>
 static inline CHAN_TYPE ConvertToAE(float in);
 
 template <>
-static inline A_u_char ConvertToAE(float in)
+static inline A_u_char ConvertToAE<A_u_char>(float in)
 {
 	return ( Clamp(in) * (float)PF_MAX_CHAN8 ) + 0.5f;
 }
 
 template <>
-static inline A_u_short ConvertToAE(float in)
+static inline A_u_short ConvertToAE<A_u_short>(float in)
 {
 	return ( Clamp(in) * (float)PF_MAX_CHAN16 ) + 0.5f;
 }
 
 template <>
-static inline PF_FpShort ConvertToAE(float in)
+static inline PF_FpShort ConvertToAE<PF_FpShort>(float in)
 {
 	return in;
 }
@@ -341,7 +342,6 @@ typedef struct {
 	A_long					width;
 	const DCIconverterBase	*converter;
 } ProcessData;
-
 
 template <typename AE_PIXTYPE, typename WP_PIXTYPE, typename CHAN_TYPE>
 static PF_Err
