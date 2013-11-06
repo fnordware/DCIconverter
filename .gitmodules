@@ -1,0 +1,4 @@
+[submodule "ext/openexr"]
+	path = ext/openexr
+	url = https://github.com/fnordware/openexr.git
+	branch = projects
