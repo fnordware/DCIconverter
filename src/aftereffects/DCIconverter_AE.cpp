@@ -429,19 +429,15 @@ static PF_Err DoRender(
 		try
 		{
 			PF_Point			origin;
-			PF_Rect				src_rect, areaR;
+			PF_Rect				areaR;
 			
-			origin.h = output->origin_x;
-			origin.v = output->origin_y;
+			origin.h = in_data->output_origin_x;
+			origin.v = in_data->output_origin_y;
 
-			src_rect.left	= -in_data->output_origin_x;
-			src_rect.top	= -in_data->output_origin_y;
-			src_rect.bottom = src_rect.top + output->height;
-			src_rect.right	= src_rect.left + output->width;
-
-			areaR.top		= 0;
 			areaR.left		= 0;
 			areaR.right		= 1;
+			
+			areaR.top		= 0;
 			areaR.bottom	= output->height;
 			
 			
@@ -584,7 +580,6 @@ SmartRender(
 	PF_OutData				*out_data,
 	PF_SmartRenderExtra		*extra)
 {
-
 	PF_Err			err		= PF_Err_NONE,
 					err2	= PF_Err_NONE;
 					
