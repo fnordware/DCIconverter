@@ -70,7 +70,7 @@
 #define COPYRIGHT			"\xA9 2013 fnord"
 #define WEBSITE				"www.fnordware.com"
 #define	MAJOR_VERSION		0
-#define	MINOR_VERSION		5
+#define	MINOR_VERSION		6
 #define	BUG_VERSION			0
 #define	STAGE_VERSION		PF_Stage_RELEASE
 #define	BUILD_VERSION		0

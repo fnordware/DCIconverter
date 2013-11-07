@@ -1,8 +1,6 @@
 ext
 ===
 
-Drop other libraries here when building, such as:
-
-[ilmbase](http://www.openexr.com/downloads.html)
+This directory holds the OpenEXR submodule (DCI Converter uses IlmBase). You will need to manually add the the After Effects CS5 SDK, which you can get from here:
 
 [After Effects SDK](http://www.adobe.com/devnet/aftereffects.html)
