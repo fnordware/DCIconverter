@@ -171,6 +171,12 @@ ParamsSetup(
 					DCI_TEMPERATURE_ID);
 	
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_CHECKBOXX(	"Normalize",
+						TRUE,
+						0,
+						NORMALIZE_ID);
+	
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDER("XYZ Gamma",
 					0.01, 5.0, 0.01, 5.0,
 					0,
@@ -393,6 +399,7 @@ static PF_Err DoRender(
 	PF_ParamDef		*DCI_rgb_color_space,
 	PF_ParamDef		*DCI_adaptation,
 	PF_ParamDef		*DCI_temperature,
+	PF_ParamDef		*DCI_normalize,
 	PF_ParamDef		*DCI_xyz_gamma,
 	PF_OutData		*out_data,
 	PF_EffectWorld	*output)
@@ -447,6 +454,7 @@ static PF_Err DoRender(
 			PF_ParamValue color_spaceP	= DCI_rgb_color_space->u.pd.value;
 			PF_ParamValue adaptationP	= DCI_adaptation->u.pd.value;
 			PF_ParamValue temperature	= DCI_temperature->u.sd.value;
+			PF_ParamValue normalize		= DCI_normalize->u.bd.value;
 			PF_FpLong xyz_gamma			= DCI_xyz_gamma->u.fs_d.value;
 			
 			
@@ -469,11 +477,11 @@ static PF_Err DoRender(
 			
 			if(operation == OPERATION_XYZ_TO_RGB)
 			{
-				converter = new ReverseDCIconverter(curve, gamma, color, adaptation, temperature, xyz_gamma);
+				converter = new ReverseDCIconverter(curve, gamma, color, adaptation, temperature, normalize, xyz_gamma);
 			}
 			else
 			{
-				converter = new ForwardDCIconverter(curve, gamma, color, adaptation, temperature, xyz_gamma);
+				converter = new ForwardDCIconverter(curve, gamma, color, adaptation, temperature, normalize, xyz_gamma);
 			}
 			
 			
@@ -591,6 +599,7 @@ SmartRender(
 				DCI_rgb_color_space,
 				DCI_adaptation,
 				DCI_temperature,
+				DCI_normalize,
 				DCI_xyz_gamma;
 
 	// zero-out parameters
@@ -600,6 +609,7 @@ SmartRender(
 	AEFX_CLR_STRUCT(DCI_rgb_color_space);
 	AEFX_CLR_STRUCT(DCI_adaptation);
 	AEFX_CLR_STRUCT(DCI_temperature);
+	AEFX_CLR_STRUCT(DCI_normalize);
 	AEFX_CLR_STRUCT(DCI_xyz_gamma);
 	
 
@@ -621,6 +631,7 @@ SmartRender(
 	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_RGB_COLOR_SPACE,	&DCI_rgb_color_space )	);
 	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_ADAPTATION,		&DCI_adaptation )	);
 	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_TEMPERATURE,		&DCI_temperature )	);
+	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_NORMALIZE,		&DCI_normalize )	);
 	ERR(	PF_CHECKOUT_PARAM_NOW( DCI_XYZ_GAMMA,		&DCI_xyz_gamma )	);
 
 	ERR(	DoRender(	in_data, 
@@ -631,6 +642,7 @@ SmartRender(
 						&DCI_rgb_color_space,
 						&DCI_adaptation,
 						&DCI_temperature,
+						&DCI_normalize,
 						&DCI_xyz_gamma,
 						out_data, 
 						output) );
@@ -642,6 +654,7 @@ SmartRender(
 	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_rgb_color_space )	);
 	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_adaptation ) );
 	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_temperature )	);
+	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_normalize )	);
 	ERR2(	PF_CHECKIN_PARAM(in_data, &DCI_xyz_gamma )	);
 
 
@@ -663,6 +676,7 @@ static PF_Err Render(
 					params[DCI_RGB_COLOR_SPACE],
 					params[DCI_ADAPTATION],
 					params[DCI_TEMPERATURE],
+					params[DCI_NORMALIZE],
 					params[DCI_XYZ_GAMMA],
 					out_data,
 					output);

@@ -97,17 +97,18 @@ class ForwardDCIconverter : public DCIconverterBase
   public:
 	ForwardDCIconverter(ResponseCurve curve, float gamma,
 						ColorSpace color, ChromaticAdaptation adapt, int temperature,
-						float xyz_gamma);
+						bool normalize, float xyz_gamma);
 						
 	virtual ~ForwardDCIconverter() {}
 	
 	virtual Pixel convert(const Pixel &pix) const;
 	
   private:
-	ResponseCurve _curve;
-	float _gamma;
-	float _xyz_gamma;
-	Matrix _rgb2xyz_matrix;
+	const ResponseCurve _curve;
+	const float _gamma;
+	const float _xyz_gamma;
+	const bool _normalize;
+	const Matrix _rgb2xyz_matrix;
 	
   private:
 	static inline float sRGBtoLin(float in);
@@ -121,17 +122,18 @@ class ReverseDCIconverter : public DCIconverterBase
   public:
 	ReverseDCIconverter(ResponseCurve curve, float gamma,
 						ColorSpace color, ChromaticAdaptation adapt, int temperature,
-						float xyz_gamma);
+						bool normalize, float xyz_gamma);
 						
 	virtual ~ReverseDCIconverter() {}
 	
 	virtual Pixel convert(const Pixel &pix) const;
 	
   private:
-	ResponseCurve _curve;
-	float _gamma;
-	float _xyz_gamma;
-	Matrix _xyz2rgb_matrix;
+	const ResponseCurve _curve;
+	const float _gamma;
+	const float _xyz_gamma;
+	const bool _normalize;
+	const Matrix _xyz2rgb_matrix;
 	
   private:
 	static inline float LinTosRGB(float in);

@@ -245,10 +245,11 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, ChromaticAdaptation adapt, in
 
 ForwardDCIconverter::ForwardDCIconverter(ResponseCurve curve, float gamma,
 											ColorSpace color, ChromaticAdaptation adapt, int temperature,
-											float xyz_gamma) :
+											bool normalize, float xyz_gamma) :
 	DCIconverterBase(color, adapt, temperature),
 	_curve(curve),
 	_gamma(gamma),
+	_normalize(normalize),
 	_xyz_gamma(xyz_gamma),
 	_rgb2xyz_matrix( DCIconverterBase::_rgb2xyz_matrix )
 {
@@ -308,6 +309,15 @@ ForwardDCIconverter::convert(const Pixel &pix) const
 	Pixel xyz = rgb * _rgb2xyz_matrix;
 	
 	
+	// normalize
+	if(_normalize)
+	{
+		xyz.x *= 48.f / 52.37f;
+		xyz.y *= 48.f / 52.37f;
+		xyz.z *= 48.f / 52.37f;
+	}
+	
+	
 	// XYZ to X'Y'Z'
 	xyz.x = GammaFunc(xyz.x, 1.f / _xyz_gamma);
 	xyz.y = GammaFunc(xyz.y, 1.f / _xyz_gamma);
@@ -353,10 +363,11 @@ ForwardDCIconverter::ProPhotoRGBtoLin(float in)
 
 ReverseDCIconverter::ReverseDCIconverter(ResponseCurve curve, float gamma,
 											ColorSpace color, ChromaticAdaptation adapt, int temperature,
-											float xyz_gamma) :
+											bool normalize, float xyz_gamma) :
 	DCIconverterBase(color, adapt, temperature),
 	_curve(curve),
 	_gamma(gamma),
+	_normalize(normalize),
 	_xyz_gamma(xyz_gamma),
 	_xyz2rgb_matrix( DCIconverterBase::_rgb2xyz_matrix.inverse() )
 {
@@ -374,6 +385,15 @@ ReverseDCIconverter::convert(const Pixel &pix) const
 	xyz.x = GammaFunc(xyz.x, _xyz_gamma);
 	xyz.y = GammaFunc(xyz.y, _xyz_gamma);
 	xyz.z = GammaFunc(xyz.z, _xyz_gamma);
+	
+	
+	// de-normalize
+	if(_normalize)
+	{
+		xyz.x *= 52.37f / 48.f;
+		xyz.y *= 52.37f / 48.f;
+		xyz.z *= 52.37f / 48.f;
+	}
 	
 	
 	// Convert XYZ to RGB

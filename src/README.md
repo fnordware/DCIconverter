@@ -47,7 +47,8 @@ These are the steps for converting an RGB image to [DCI-friendly](http://en.wiki
 1. Convert from non-linear RGB (R'G'B') to linear RGB using a response curve
 2. Convert from linear RGB to linear XYZ based on the chomaticities specified by the source RGB color space
 3. Use chromatic adaptation to adjust between the illuminant white point specified by the source RGB color space and a target white point
-4. Convert from XYZ to non-linear XYZ (X'Y'Z') using a gamma curve
+4. Normalize the XYZ 
+5. Convert from XYZ to non-linear XYZ (X'Y'Z') using a gamma curve
 
 
 ###Response Curve
@@ -99,9 +100,13 @@ sRGB and Rec. 709 use [D65](http://en.wikipedia.org/wiki/Illuminant_D65) while P
 The DCI Converter plug-in defaults to using a Color Temperature of 5900K for chromatic adaptation because that's the setting used by the After Effects DCI profile, "DCDM X'Y'Z'(Gamma 2.6) 5900K (by Adobe)".
 
 
+###Normalize XYZ
+
+Conversion to XYZ for some white points, including D65, can produce XYZ values above 1.0. These would normally get clipped when converting to 12-bit. To prevent clipping, DCI scales values down by a factor of 48.0 / 52.37.
+
+The 48.0 above comes from the DCI screen luminance level of 48 cd/m<sup>2</sup>. 52.37 is the "peak luminance," providing necessary headroom. For more details see the DCI Spec, SMPTE 428-1.
+
+
 ###XYZ Gamma
 
 The DCI calls spec for its X'Y'Z' color space to have a simple 2.6 gamma.
-
-  
-    

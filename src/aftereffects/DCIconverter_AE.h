@@ -67,10 +67,10 @@
 #define DESCRIPTION			"Convert RGB to XYZ"
 #define RELEASE_DATE		__DATE__
 #define AUTHOR				"by Brendan Bolles"
-#define COPYRIGHT			"\xA9 2013 fnord"
+#define COPYRIGHT			"\xA9 2013-2014 fnord"
 #define WEBSITE				"www.fnordware.com"
 #define	MAJOR_VERSION		0
-#define	MINOR_VERSION		6
+#define	MINOR_VERSION		7
 #define	BUG_VERSION			0
 #define	STAGE_VERSION		PF_Stage_RELEASE
 #define	BUILD_VERSION		0
@@ -85,6 +85,7 @@ enum {
 	DCI_RGB_COLOR_SPACE,
 	DCI_ADAPTATION,
 	DCI_TEMPERATURE,
+	DCI_NORMALIZE,
 	DCI_XYZ_GAMMA,
     
     DCI_NUM_PARAMS
@@ -97,7 +98,8 @@ enum {
 	DCI_ADAPTATION_ID,
 	DCI_TEMPERATURE_ID,
 	DCI_XYZ_GAMMA_ID,
-	DCI_RGB_COLOR_SPACE_ID
+	DCI_RGB_COLOR_SPACE_ID,
+	NORMALIZE_ID
 };
 
 
