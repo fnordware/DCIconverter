@@ -87,7 +87,7 @@ To convert to [XYZ color space](http://en.wikipedia.org/wiki/XYZ_color_space), w
 
 [**ProPhoto RGB**](http://en.wikipedia.org/wiki/ProPhoto_RGB_color_space) (also known as [ROMM RGB](http://www.color.org/ROMMRGB.pdf)) uses different primaries, and has a much wider [gamut](http://en.wikipedia.org/wiki/Gamut).
 
-[**DCI P3**](http://www.hp.com/united-states/campaigns/workstations/pdfs/lp2480zx-dci--p3-emulation.pdf) represents the gamut of a 3-color DCI projector.
+[**DCI P3**](http://www.hp.com/united-states/campaigns/workstations/pdfs/lp2480zx-dci--p3-emulation.pdf) is an RGB space that represents the gamut of a 3-color DCI projector.
 
 Your monitor is sRGB while a video camera shoots in Rec. 709. Actually, that's a gross oversimplification, but will have to do for this document. Getting your pixels into ProPhoto RGB usually involves [ICC Profiles](http://en.wikipedia.org/wiki/ICC_profile) in Photoshop or another program.
 
