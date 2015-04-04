@@ -131,7 +131,7 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, const XYZvalue *endWhite)
 	static const float P3_b_z = 1.f - P3_b_x - P3_b_y;
 	static const float P3_w_z = 1.f - P3_w_x - P3_w_y;
 	
-	XYZvalue P3_w_XYZ = (1.f / P3_w_y) * Imath::V3f(P3_w_x, P3_w_y, P3_w_z);
+	static const XYZvalue P3_w_XYZ = (1.f / P3_w_y) * Imath::V3f(P3_w_x, P3_w_y, P3_w_z);
 	
 	
 	static const Matrix P3_chromaticity_mat
@@ -271,8 +271,10 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, ChromaticAdaptation adapt, in
 				y = 0.3474;
 				Y = 1.0000;
 			}
-			else if(adapt == D65)
+			else
 			{
+				assert(adapt == D65);
+			
 				x = 0.3127;
 				y = 0.3290;
 				Y = 1.0000;
