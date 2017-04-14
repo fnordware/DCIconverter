@@ -68,7 +68,9 @@ class DCIconverterBase
 		None,
 		D50,
 		D55,
+		D60,
 		D65,
+		DCI,
 		Temp
 	} ChromaticAdaptation;
   

@@ -135,7 +135,7 @@ ParamsSetup(
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_POPUP(	"Response Curve",
 					CURVE_NUM_OPTIONS,
-					CURVE_Rec709,
+					CURVE_sRGB,
 					CURVE_MENU_STR,
 					DCI_CURVE_ID);
 					
@@ -472,7 +472,9 @@ static PF_Err DoRender(
 			DCIconverterBase::ChromaticAdaptation adaptation =	adaptationP == ADAPTATION_NONE ? DCIconverterBase::None :
 																adaptationP == ADAPTATION_D50 ? DCIconverterBase::D50 :
 																adaptationP == ADAPTATION_D55 ? DCIconverterBase::D55 :
+																adaptationP == ADAPTATION_D60 ? DCIconverterBase::D60 :
 																adaptationP == ADAPTATION_D65 ? DCIconverterBase::D65 :
+																adaptationP == ADAPTATION_DCI ? DCIconverterBase::DCI :
 																DCIconverterBase::Temp;
 			
 			const DCIconverterBase *converter = NULL;
@@ -528,7 +530,7 @@ static PF_Err DoRender(
 																	ProcessRow<PF_Pixel32, PF_Pixel32, PF_FpShort>,
 																	output);
 				}
-				if(format == PrPixelFormat_BGRA_4444_8u)
+				else if(format == PrPixelFormat_BGRA_4444_8u)
 				{
 					err = suites.Iterate8Suite1()->iterate_origin(in_data,
 																	0,

@@ -98,7 +98,7 @@ Your vision automatically adjusts for different lighting conditions using [chrom
 
 DCI Converter uses the [Bradford method](http://www.brucelindbloom.com/index.html?Eqn_ChromAdapt.html) to perform chromatic adaptation between the [illuminant](http://en.wikipedia.org/wiki/Standard_illuminant) named by your RGB Color Space and an illuminant or [**color temperature**](http://en.wikipedia.org/wiki/Color_temperature) you specify.
 
-sRGB and Rec. 709 use [D65](http://en.wikipedia.org/wiki/Illuminant_D65) while ProPhoto RGB uses [D50](http://en.wikipedia.org/wiki/Standard_illuminant#Illuminant_series_D) as the source illuminant. P3 is roughly 5900K.
+sRGB and Rec. 709 use [D65](http://en.wikipedia.org/wiki/Illuminant_D65) while ProPhoto RGB uses [D50](http://en.wikipedia.org/wiki/Standard_illuminant#Illuminant_series_D) as the source illuminant.
 
 The DCI Converter plug-in defaults to using a Color Temperature of 5900K for chromatic adaptation because that's the setting used by the After Effects DCI profile, "DCDM X'Y'Z'(Gamma 2.6) 5900K (by Adobe)".
 

@@ -114,8 +114,8 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, const XYZvalue *endWhite)
 		 0.0000,  0.0000,  1.2123);
 		 
 	
-	// DCI-P3 space (SMPTE-231-2)
-	// Can't find an official spec, but here's a doc:
+	// DCI-P3 space (SMPTE RP 431-2, formerly DCI Spec Table 11)
+	// Also:
 	// http://www.hp.com/united-states/campaigns/workstations/pdfs/lp2480zx-dci--p3-emulation.pdf
 
 	static const float P3_r_x = 0.680;	static const float P3_r_y = 0.320;
@@ -256,8 +256,11 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, ChromaticAdaptation adapt, in
 		{
 			float x, y, Y;
 			
-			// Here's a good page for some of these values:
+			// Some links for chromaticity values:
 			// http://hackage.haskell.org/packages/archive/colour/2.3.3/doc/html/src/Data-Colour-CIE-Illuminant.html
+			// https://en.wikipedia.org/wiki/Standard_illuminant#White_points_of_standard_illuminants
+			// http://www.filmlight.ltd.uk/pdf/whitepapers/FL-TL-TN-0417-StdColourSpaces.pdf
+			// http://nbviewer.ipython.org/github/colour-science/colour-ipython/blob/master/notebooks/colorimetry/illuminants.ipynb
 			
 			if(adapt == D50)
 			{
@@ -270,6 +273,18 @@ DCIconverterBase::RGBtoXYZmatrix(ColorSpace color, ChromaticAdaptation adapt, in
 				x = 0.3324;
 				y = 0.3474;
 				Y = 1.0000;
+			}
+			else if(adapt == D60)
+			{
+				x = 0.3217;
+				y = 0.3378; 
+				Y = 1.0000;
+			}
+			else if(adapt == DCI)
+			{
+				x = 0.314;
+				y = 0.351;
+				Y = 1.000;
 			}
 			else
 			{

@@ -67,10 +67,10 @@
 #define DESCRIPTION			"Convert RGB to XYZ"
 #define RELEASE_DATE		__DATE__
 #define AUTHOR				"by Brendan Bolles"
-#define COPYRIGHT			"\xA9 2013-2014 fnord"
+#define COPYRIGHT			"\xA9 2013-2015 fnord"
 #define WEBSITE				"www.fnordware.com"
 #define	MAJOR_VERSION		0
-#define	MINOR_VERSION		7
+#define	MINOR_VERSION		8
 #define	BUG_VERSION			0
 #define	STAGE_VERSION		PF_Stage_RELEASE
 #define	BUILD_VERSION		0
@@ -143,13 +143,15 @@ enum {
 	ADAPTATION_NONE = 1,
 	ADAPTATION_D50,
 	ADAPTATION_D55,
+	ADAPTATION_D60,
 	ADAPTATION_D65,
+	ADAPTATION_DCI,
 	ADAPTATION_TEMPERATURE,
 	
 	ADAPTATION_NUM_OPTIONS = ADAPTATION_TEMPERATURE
 };
 
-#define ADAPTATION_MENU_STR "None|D50|D55|D65|Color Temperature"
+#define ADAPTATION_MENU_STR "None|D50|D55|D60|D65|DCI|Color Temperature"
 
 
 
